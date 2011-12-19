@@ -1,0 +1,27 @@
+This file documents the deployment options. The installation has been tested on 
+IIS 6.0 (windows XP/Windows 2003) and 7.5 (Windows 2008). The used database was
+MS SQL Server 2008 R2 (production).
+
+** Connection String (database):
+
+   Create a connection string named "WhosOnData". Replace options within <>.
+
+   a) Using integrated security:
+
+      "Server=<server>;Database=<schema>;Integrated Security=true".
+
+   b) Using SQL login:
+
+      "Data Source=<ipaddr>,1433;Initial Catalog=<schema>;User ID=<user>;Password=<pass>"
+   
+** Application pool:
+
+   Using integrated security for database connection will work if users are 
+   authenticating when connecting to the web service. If the web service is 
+   called anonymous, then the identity of the application pool can be configured
+   to run under an unpriviledged account. 
+   
+   If the IIS and SQL database is located on different hosts, then the account 
+   should be created in the domain.
+
+// Anders Lövgren, 2011-12-15
