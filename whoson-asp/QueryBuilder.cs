@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Services.Protocols;
 
 namespace WhosOn.ASP
 {
@@ -31,6 +32,16 @@ namespace WhosOn.ASP
         public void SetMatch(LogonEventMatch match)
         {
             this.match = match;
+        }
+
+        private bool IsSet(string val)
+        {
+            return val != null && val.Length != 0;
+        }
+
+        private bool IsSet(DateTime val)
+        {
+            return val != null && val.Ticks != 0 && val != UnixEpoch;
         }
 
         public string Build()
@@ -93,7 +104,7 @@ namespace WhosOn.ASP
 
         private void FilterBetween()
         {
-            if (filter.StartTime != DateTime.MinValue && filter.EndTime != DateTime.MinValue)
+            if (IsSet(filter.StartTime) && IsSet(filter.EndTime))
             {
                 where.Add(string.Format("StartTime BETWEEN '{0}' AND '{1}'", filter.StartTime, filter.EndTime));
             }
@@ -105,11 +116,11 @@ namespace WhosOn.ASP
             {
                 where.Add(string.Format("ID < {0}", filter.EventID));
             }
-            if (filter.StartTime != DateTime.MinValue)
+            if (IsSet(filter.StartTime))
             {
                 where.Add(string.Format("StartTime < '{0}'", filter.StartTime));
             }
-            if (filter.EndTime != DateTime.MinValue)
+            if (IsSet(filter.EndTime))
             {
                 where.Add(string.Format("EndTime < '{0}'", filter.EndTime));
             }
@@ -121,11 +132,11 @@ namespace WhosOn.ASP
             {
                 where.Add(string.Format("ID > {0}", filter.EventID));
             }
-            if (filter.StartTime != DateTime.MinValue)
+            if (IsSet(filter.StartTime))
             {
                 where.Add(string.Format("StartTime > '{0}'", filter.StartTime));
             }
-            if (filter.EndTime != DateTime.MinValue)
+            if (IsSet(filter.EndTime))
             {
                 where.Add(string.Format("EndTime > '{0}'", filter.EndTime));
             }
@@ -137,35 +148,35 @@ namespace WhosOn.ASP
             {
                 where.Add(string.Format("ID = {0}", filter.EventID));
             }
-            if (filter.Username != null)
+            if (IsSet(filter.Username))
             {
                 where.Add(string.Format("Username = '{0}'", filter.Username));
             }
-            if (filter.Domain != null)
+            if (IsSet(filter.Domain))
             {
                 where.Add(string.Format("Domain = '{0}'", filter.Domain));
             }
-            if (filter.HwAddress != null)
+            if (IsSet(filter.HwAddress))
             {
                 where.Add(string.Format("HwAddress = '{0}'", filter.HwAddress));
             }
-            if (filter.IpAaddres != null)
+            if (IsSet(filter.IpAddress))
             {
-                where.Add(string.Format("IpAddress = '{0}'", filter.IpAaddres));
+                where.Add(string.Format("IpAddress = '{0}'", filter.IpAddress));
             }
-            if (filter.Hostname != null)
+            if (IsSet(filter.Hostname))
             {
                 where.Add(string.Format("Hostname = '{0}'", filter.Hostname));
             }
-            if (filter.Workstation != null)
+            if (IsSet(filter.Workstation))
             {
                 where.Add(string.Format("Workstation = '{0}'", filter.Workstation));
             }
-            if (filter.StartTime != DateTime.MinValue)
+            if (IsSet(filter.StartTime))
             {
                 where.Add(string.Format("StartTime = '{0}'", filter.StartTime));
             }
-            if (filter.EndTime != DateTime.MinValue)
+            if (IsSet(filter.EndTime))
             {
                 where.Add(string.Format("EndTime = '{0}'", filter.EndTime));
             }
@@ -176,5 +187,7 @@ namespace WhosOn.ASP
 
         private string query;
         private List<string> where;
+
+        private DateTime UnixEpoch = new DateTime(1970, 1, 1, 0, 0, 0);
     }
 }
