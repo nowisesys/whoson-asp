@@ -1,8 +1,8 @@
 <publishData>
-  <publishTarget publishUrl="http://localhost/websvc/whoson/">
-    <file relUrl="bin/whoson-asp.dll" publishTime="11/23/2011 00:11:52" />
-    <file relUrl="bin/whoson-asp.pdb" publishTime="11/23/2011 00:11:52" />
-    <file relUrl="LogonEventService.asmx" publishTime="11/21/2011 13:04:58" />
-    <file relUrl="Web.config" publishTime="11/21/2011 17:09:22" />
+  <publishTarget publishUrl="Z:\inetpub\apps\whoson2\">
+    <file relUrl="bin/whoson-asp2.pdb" publishTime="12/19/2011 17:16:07" />
+    <file relUrl="LogonAccountingService.asmx" publishTime="12/15/2011 23:52:13" />
+    <file relUrl="bin/whoson-asp2.dll" publishTime="12/19/2011 17:16:07" />
+    <file relUrl="Web.config" publishTime="12/19/2011 11:51:17" />
   </publishTarget>
 </publishData>

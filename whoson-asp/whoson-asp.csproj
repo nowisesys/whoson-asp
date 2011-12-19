@@ -4,12 +4,12 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{E9E3AABE-5CB3-49D2-BD61-193936873338}</ProjectGuid>
+    <ProjectGuid>{38C9277F-B3BF-4F50-A239-54845A975477}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>WhosOn.ASP</RootNamespace>
-    <AssemblyName>whoson-asp</AssemblyName>
+    <AssemblyName>whoson-asp2</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -53,19 +53,19 @@
     <Reference Include="System.Web.Mobile" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="LogonEventService.asmx" />
+    <Content Include="LogonAccountingService.asmx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LogonEventService.asmx.cs">
-      <DependentUpon>LogonEventService.asmx</DependentUpon>
+    <Compile Include="Database.cs" />
+    <Compile Include="LogonAccountingService.asmx.cs">
+      <DependentUpon>LogonAccountingService.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Database.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryBuilder.cs" />
     <Compile Include="QueryResult.cs" />
-    <Compile Include="ServiceHandler.cs" />
+    <Compile Include="RemoteHost.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -85,7 +85,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>2319</DevelopmentServerPort>
+          <DevelopmentServerPort>2644</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

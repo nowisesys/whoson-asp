@@ -1,96 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Services;
+using System.Web.Services.Protocols;
+using System.Xml;
 using System.Data.SqlClient;
 using System.Data;
 
 namespace WhosOn.ASP
 {
-
-    class RemoteHost
+    [Serializable]
+    public struct LogonEvent
     {
-        private HttpRequest request;
-
-        public RemoteHost(HttpRequest request)
-        {
-            this.request = request;
-        }
-
-        public string Address
-        {
-            get { return request.UserHostAddress; }
-        }
-
-        public string HostName
-        {
-            get { return request.UserHostName; }
-        }
-
-        public HttpRequest Request
-        {
-            get { return request; }
-        }
+        public int EventID;
+        public string Username;
+        public string Domain;
+        public string HwAddress;
+        public string IpAddress;
+        public string Hostname;
+        public string Workstation;
+        public DateTime StartTime;
+        public DateTime EndTime;
     }
 
-    class ServiceContext
+    [Serializable]
+    public enum LogonEventMatch
     {
-        private WebService service;
-        private RemoteHost remote;
-
-        public ServiceContext(ref WebService service)
-        {
-            this.service = service;
-            this.remote = new RemoteHost(service.Context.Request);
-        }
-
-        public RemoteHost Remote
-        {
-            get { return remote; }
-        }
+        Before, Between, After, Exact, Active, Closed
     }
 
-    /// <summary>
-    /// The request handler for the web service.
-    /// </summary>
-    public class ServiceHandler
+    [WebService(Namespace = "http://it.bmc.uu.se/whoson")]
+    [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
+    [System.ComponentModel.ToolboxItem(false)]
+    public class LogonAccountingService : System.Web.Services.WebService
     {
-        private WebService service;
-        private static ServiceHandler handler;
 
-        protected ServiceHandler(ref WebService service)
-        {
-            this.service = service;
-        }
-
-        /// <summary>
-        /// Get handler for web service request.
-        /// </summary>
-        /// <returns>The request handler object.</returns>
-        public static ServiceHandler GetHandler(WebService service)
-        {
-            ServiceHandler.handler = new ServiceHandler(ref service);
-            return ServiceHandler.handler;
-        }
-
-        /// <summary>
-        /// Insert a new logon event in the database and return its logon event ID.
-        /// </summary>
-        /// <param name="user">The username.</param>
-        /// <param name="domain">The logon domain.</param>
-        /// <param name="computer">The computer name (NetBIOS).</param>
-        /// <param name="hwaddr">The MAC address.</param>
-        /// <returns>The event ID.</returns>
+        [WebMethod(Description="Creates and return the ID of an logon session. The computer argument is the NetBIOS name.")]
         public int CreateLogonEvent(string user, string domain, string computer, string hwaddr)
         {
-            ServiceContext context = new ServiceContext(ref service);
-            using (Database db = new Database())
+            using (Database db = new Database(Database.ConnectionStringName))
             {
                 using (SqlConnection connection = db.Connection)
                 {
                     using (SqlCommand command = connection.CreateCommand())
                     {
+                        RemoteHost remote = new RemoteHost(Context.Request);
+
                         command.CommandType = CommandType.StoredProcedure;
                         command.CommandText = "CreateLogonEvent";
 
@@ -100,8 +55,8 @@ namespace WhosOn.ASP
                         command.Parameters.AddWithValue("@username", user);
                         command.Parameters.AddWithValue("@domain", domain);
                         command.Parameters.AddWithValue("@hwaddr", hwaddr);
-                        command.Parameters.AddWithValue("@ipaddr", context.Remote.Address);
-                        command.Parameters.AddWithValue("@hostname", context.Remote.HostName);
+                        command.Parameters.AddWithValue("@ipaddr", remote.Address);
+                        command.Parameters.AddWithValue("@hostname", remote.HostName);
                         command.Parameters.AddWithValue("@wksta", computer);
 
                         command.ExecuteNonQuery();
@@ -111,14 +66,10 @@ namespace WhosOn.ASP
             }
         }
 
-        /// <summary>
-        /// Mark logon event identified by eventID as logged out.
-        /// </summary>
-        /// <param name="eventID">The logon event ID.</param>
+        [WebMethod(Description="Close an existing logon session identified by the event ID")]
         public void CloseLogonEvent(int eventID)
         {
-            ServiceContext context = new ServiceContext(ref service);
-            using (Database db = new Database())
+            using (Database db = new Database(Database.ConnectionStringName))
             {
                 using (SqlConnection connection = db.Connection)
                 {
@@ -133,14 +84,10 @@ namespace WhosOn.ASP
             }
         }
 
-        /// <summary>
-        /// Delete logon event identified by eventID.
-        /// </summary>
-        /// <param name="eventID">The logon event ID.</param>
+        [WebMethod(Description="Deletes the logon event identified by the event ID.")]
         public void DeleteLogonEvent(int eventID)
         {
-            ServiceContext context = new ServiceContext(ref service);
-            using (Database db = new Database())
+            using (Database db = new Database(Database.ConnectionStringName))
             {
                 using (SqlConnection connection = db.Connection)
                 {
@@ -155,26 +102,22 @@ namespace WhosOn.ASP
             }
         }
 
-        /// <summary>
-        /// Find logon event matching given arguments.
-        /// </summary>
-        /// <param name="user">The username.</param>
-        /// <param name="domain">The logon domain.</param>
-        /// <param name="computer">The computer name (NetBIOS).</param>
+        [WebMethod(Description="Find and return the logon event matching the request parameters.")]
         public LogonEvent FindLogonEvent(string user, string domain, string computer)
         {
-            ServiceContext context = new ServiceContext(ref service);
-            using (Database db = new Database())
+            using (Database db = new Database(Database.ConnectionStringName))
             {
                 using (SqlConnection connection = db.Connection)
                 {
                     using (SqlCommand command = connection.CreateCommand())
                     {
+                        RemoteHost remote = new RemoteHost(Context.Request);
+
                         command.CommandType = CommandType.StoredProcedure;
                         command.CommandText = "FindLogonEvent";
                         command.Parameters.AddWithValue("@username", user);
                         command.Parameters.AddWithValue("@domain", domain);
-                        command.Parameters.AddWithValue("@ipaddr", context.Remote.Address);
+                        command.Parameters.AddWithValue("@ipaddr", remote.Address);
 
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
@@ -190,16 +133,10 @@ namespace WhosOn.ASP
             }
         }
 
-        /// <summary>
-        /// Returns list of logon events matching given filter and match preferences.
-        /// </summary>
-        /// <param name="filter">The </param>
-        /// <param name="match"></param>
-        /// <returns></returns>
+        [WebMethod(Description="Find and return all logon events matching the filter and match options.")]
         public List<LogonEvent> FindLogonEvents(LogonEvent filter, LogonEventMatch match)
         {
-            ServiceContext context = new ServiceContext(ref service);
-            using (Database db = new Database())
+            using (Database db = new Database(Database.ConnectionStringName))
             {
                 using (SqlConnection connection = db.Connection)
                 {
@@ -219,7 +156,7 @@ namespace WhosOn.ASP
                     }
                 }
             }
-        }
+        }        
 
     }
 }
