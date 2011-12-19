@@ -55,7 +55,7 @@ namespace WhosOn.ASP
             if (!reader.IsDBNull(reader.GetOrdinal("HwAddress")))
                 record.HwAddress = reader.GetString(reader.GetOrdinal("HwAddress")).Trim();
             if (!reader.IsDBNull(reader.GetOrdinal("IpAddress")))
-                record.IpAaddres = reader.GetString(reader.GetOrdinal("IpAddress")).Trim();
+                record.IpAddress = reader.GetString(reader.GetOrdinal("IpAddress")).Trim();
             if (!reader.IsDBNull(reader.GetOrdinal("Hostname")))
                 record.Hostname = reader.GetString(reader.GetOrdinal("Hostname")).Trim();
             if (!reader.IsDBNull(reader.GetOrdinal("Workstation")))
