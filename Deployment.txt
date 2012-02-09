@@ -4,7 +4,8 @@ MS SQL Server 2008 R2 (production).
 
 ** Connection String (database):
 
-   Create a connection string named "WhosOnData". Replace options within <>.
+   Create a connection string named "WhosOnData" by selecting the web application in
+   the IIS 7 manager and double-click on "Application Development -> Connection Strings". 
 
    a) Using integrated security:
 
@@ -13,6 +14,8 @@ MS SQL Server 2008 R2 (production).
    b) Using SQL login:
 
       "Data Source=<ipaddr>,1433;Initial Catalog=<schema>;User ID=<user>;Password=<pass>"
+
+   Replace options within <>.
    
 ** Application pool:
 
