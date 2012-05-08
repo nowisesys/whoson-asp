@@ -21,6 +21,9 @@ namespace WhosOn.ASP
         public string Workstation;
         public DateTime StartTime;
         public DateTime EndTime;
+        public int FirstID;         // Only used in query
+        public int LastID;          // Only used in query
+        public int Limit;           // Only used in query
     }
 
     [Serializable]

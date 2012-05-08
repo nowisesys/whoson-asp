@@ -63,7 +63,7 @@ namespace WhosOn.ASP
         public string Build()
         {
             where = new List<string>();
-            query = "SELECT * FROM Logons";
+            query = string.Format("SET ROWCOUNT {0}; SELECT * FROM Logons", filter.Limit);  // limit == 0 -> unlimited
 
             switch (match)
             {
@@ -102,6 +102,7 @@ namespace WhosOn.ASP
                 }
             }
             query += " ORDER BY ID";
+
             return query;
         }
 
@@ -122,6 +123,10 @@ namespace WhosOn.ASP
 
         private void FilterBetween()
         {
+            if (filter.FirstID >= 0 && filter.LastID > filter.FirstID)
+            {
+                where.Add(string.Format("ID BETWEEN {0} and {1}", filter.FirstID, filter.LastID));
+            }
             if (IsSet(filter.StartTime) && IsSet(filter.EndTime))
             {
                 where.Add(string.Format("StartTime BETWEEN '{0}' AND '{1}'", filter.StartTime, filter.EndTime));
@@ -148,15 +153,15 @@ namespace WhosOn.ASP
         {
             if (filter.EventID != 0)
             {
-                where.Add(string.Format("ID > {0}", filter.EventID));
+                where.Add(string.Format("ID >= {0}", filter.EventID));
             }
             if (IsSet(filter.StartTime))
             {
-                where.Add(string.Format("StartTime > '{0}'", filter.StartTime));
+                where.Add(string.Format("StartTime >= '{0}'", filter.StartTime));
             }
             if (IsSet(filter.EndTime))
             {
-                where.Add(string.Format("EndTime > '{0}'", filter.EndTime));
+                where.Add(string.Format("EndTime >= '{0}'", filter.EndTime));
             }
         }
 
