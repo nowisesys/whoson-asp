@@ -1,20 +1,20 @@
 <publishData>
-  <publishTarget publishUrl="D:\Inetpub\WebServices\whoson\">
-    <file relUrl="LogonAccountingService.asmx" publishTime="12/15/2011 23:52:13" />
-    <file relUrl="bin/whoson-asp.dll" publishTime="05/08/2012 16:12:24" />
-    <file relUrl="bin/whoson-asp.pdb" publishTime="05/08/2012 16:12:24" />
-    <file relUrl="Web.config" publishTime="05/04/2012 15:53:48" />
-  </publishTarget>
   <publishTarget publishUrl="Z:\inetpub\apps\whoson\">
     <file relUrl="LogonAccountingService.asmx" publishTime="12/15/2011 23:52:13" />
-    <file relUrl="bin/whoson-asp.dll" publishTime="03/28/2012 19:16:49" />
-    <file relUrl="bin/whoson-asp.pdb" publishTime="03/28/2012 19:16:49" />
-    <file relUrl="Web.config" publishTime="12/19/2011 17:35:26" />
+    <file relUrl="bin/whoson-asp.dll" publishTime="05/14/2012 14:40:10" />
+    <file relUrl="bin/whoson-asp.pdb" publishTime="05/14/2012 14:40:09" />
+    <file relUrl="Web.config" publishTime="05/04/2012 15:53:48" />
+  </publishTarget>
+  <publishTarget publishUrl="D:\Inetpub\WebServices\whoson\">
+    <file relUrl="LogonAccountingService.asmx" publishTime="12/15/2011 23:52:13" />
+    <file relUrl="bin/whoson-asp.dll" publishTime="05/14/2012 14:40:10" />
+    <file relUrl="bin/whoson-asp.pdb" publishTime="05/14/2012 14:40:09" />
+    <file relUrl="Web.config" publishTime="05/04/2012 15:53:48" />
   </publishTarget>
   <publishTarget publishUrl="Z:\inetpub\apps\whoson2\">
+    <file relUrl="bin/whoson-asp2.pdb" publishTime="12/19/2011 17:16:07" />
     <file relUrl="LogonAccountingService.asmx" publishTime="12/15/2011 23:52:13" />
     <file relUrl="bin/whoson-asp2.dll" publishTime="12/19/2011 17:16:07" />
-    <file relUrl="bin/whoson-asp2.pdb" publishTime="12/19/2011 17:16:07" />
     <file relUrl="Web.config" publishTime="12/19/2011 11:51:17" />
   </publishTarget>
 </publishData>
