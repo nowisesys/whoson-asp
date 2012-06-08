@@ -1,7 +1,28 @@
-This file documents the deployment options. The installation has been tested on 
-IIS 6.0 (windows XP/Windows 2003) and 7.5 (Windows 2008). The used database was
-MS SQL Server 2008 R2 (production).
 
+DEPLOYMENT DESCRIPTION FOR WHOSON ASP.NET
+---------------------------------------------
+
+This file documents the deployment of this web service application on IIS 6.0.
+
+** Requirements:
+
+   This ASP.NET application has been tested with these versions. Other versions might 
+   work as well, but at least ASP.NET 1.1 will fail.
+   
+   o) ASP.NET version 2.0 (tested with 2.0.50727)
+   o) IIS 6.0 (windows XP/Windows 2003) and 7.5 (Windows 2008). 
+   o) Microsoft SQL Server 2008 R2 (production).
+
+** Setup:
+
+   Download the SQL database script from http://it.bmc.uu.se/andlov/proj/whoson/sql/
+   and create a database. Run the SQL script to initialize an MSSQL or MySQL database.
+   
+   Create a directory for WhosOn ASP.NET. I like to keep applications outside of the
+   web root and use a virtual directory pointing at this folder.
+   
+   Install instructions: http://it.bmc.uu.se/andlov/proj/whoson/asp/install.php
+   
 ** Connection String (database):
 
    Create a connection string named "WhosOnData" by selecting the web application in
