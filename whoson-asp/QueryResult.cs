@@ -1,5 +1,5 @@
 ﻿// WhosOn ASP.NET Server Side Application
-// Copyright (C) 2011-2012 Anders Lövgren, Computing Department at BMC, Uppsala University
+// Copyright (C) 2011-2019 Anders Lövgren, Nowise Systems/BMC-IT, Uppsala University
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
