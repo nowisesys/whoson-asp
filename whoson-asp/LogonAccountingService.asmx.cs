@@ -32,7 +32,7 @@ namespace WhosOn.ASP
         Before, Between, After, Exact, Active, Closed
     }
 
-    [WebService(Namespace = "http://it.bmc.uu.se/whoson")]
+    [WebService(Namespace = "http://localhost/whoson")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [System.ComponentModel.ToolboxItem(false)]
     public class LogonAccountingService : System.Web.Services.WebService

@@ -15,13 +15,13 @@ This file documents the deployment of this web service application on IIS 6.0.
 
 ** Setup:
 
-   Download the SQL database script from http://it.bmc.uu.se/andlov/proj/whoson/sql/
+   Download the SQL database script from https://github.com/nowisesys/whoson-sql
    and create a database. Run the SQL script to initialize an MSSQL or MySQL database.
    
    Create a directory for WhosOn ASP.NET. I like to keep applications outside of the
    web root and use a virtual directory pointing at this folder.
    
-   Install instructions: http://it.bmc.uu.se/andlov/proj/whoson/asp/install.php
+   Install instructions: https://nowise.se/oss/whoson/asp/install
    
 ** Connection String (database):
 
